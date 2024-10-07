@@ -51,46 +51,52 @@
 #### Роль в игре: 
 Монеты приобретаются для возобновления боеприпасов, покупки оружия, медикаментов и для прокачки игровых навыков. Выпадают с убитых зомби, после просмотра рекламы и из сундуков
 
+#### Схема:
+![Снимок экрана 2024-10-07 200405](https://github.com/user-attachments/assets/e222dc7f-3f57-46a7-867c-7a5c1e976729)
 
-print('Hello World')
-
-
+#### Его место: 
+Предмет занимает ключевую роль в игре. Без монет не будет функционировать вся экономика игры.
 
 
 ## Задание 2
-### Написать программу Hello World на С#.
+### С помощью скрипта на языке Python заполнить и визуализировать google-таблицу.
 Ход работы:
-- Скачать Unity и авторизоваться.
-- Скачать среду разработки для работы на С# (Microsoft Visual Studio).
-- Создать 3D проект.
-- Добавить пустой GameObject.
-- Написать скрипт компонента, который будет выводить в консоль 'Hello World'.
+- Написать скрипт на  Python.
+- Заполнить google-таблицу данными, описывающие монеты.
+- Визуализировать данные в google-таблице.
 
-
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Helloworld : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log("Hello world");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+import gspread
+import numpy as np
+import pandas as pd
+gc = gspread.service_account(filename='unitydatascience2-437613-ae095d93eed1.json')
+sh = gc.open('UnityServiceDataScince2')
+sh.sheet1.clear()
+zombie_kills = np.random.randint(1, 20, 10)  # Случайное количество убийств зомби
+limb_hits = np.random.randint(0, 10, 10)     # Случайное количество попаданий в конечности
+ads_views = np.random.randint(0, 5, 10)       # Случайное количество просмотров рекламы
+data = {
+    'Номер строки': np.arange(1, len(zombie_kills) + 1),
+    'Убийства зомби': zombie_kills,
+    'Попадания в конечности': limb_hits,
+    'Просмотры рекламы': ads_views,
 }
+df = pd.DataFrame(data)
+df['Общая сумма монет'] = df['Убийства зомби'] + df['Попадания в конечности'] + df['Просмотры рекламы'] * 100
+sh.sheet1.insert_row(df.columns.tolist(), 1)  # Вставляем заголовки в первую строку
+for i in range(len(df)):
+    sh.sheet1.insert_row(df.iloc[i].tolist(), i + 2)  # Вставляем данные
+print(df)
+print("Данные успешно добавлены в таблицу.")
+
+
 
 
 
 ## Задание 3
 ### Какова роль параметра Lr? Ответьте на вопрос, приведите пример выполнения кода, который подтверждает ваш ответ. В качестве эксперимента можете изменить значение параметра.
-
+Вот так бы всегда
+неплохо(Сидор)
+Ты бы ещё консервных банок насобирал
 
 
 
