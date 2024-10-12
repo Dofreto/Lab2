@@ -64,8 +64,15 @@
 - Написать скрипт на  Python.
 - Заполнить google-таблицу данными, описывающие монеты.
 - Визуализировать данные в google-таблице.
-Я смоделировал ситуацию, в которой игрок успевает поднять монеты с каждого убитого зомби
+#### Условия написания скрипта 
+Количество монет меняется в зависимости от действий игрока и его навыков. Поскольку есть множество вариантов изменения этого параметра, я, для простоты, добавил некоторые условности:
+- Игрок поднимает монеты со всех убитых зомби
+-  Игрок играет в всего 5 раундов.
+-  После каждых двух раундов игрок может потратить деньги в магазине на патроны (может потратить от 5 до 25, или кратные 5, но до 25).
+-  Игрок не использует функцию просмотра рекламы и открытие сундуков.
+
 #### Скрипт на языке Python:
+Написать код на подобие кода ниже:
 ```py
 
 import gspread
@@ -78,50 +85,52 @@ worksheet = sh.sheet1
 
 sh.sheet1.clear() # Очистка таблицы от старых данных
 
-# Настройка симуляции игры
-num_sessions = 10  # количество игровых сессий
-zombies_killed = np.random.randint(1, 10, num_sessions)  # количество убитых зомби
-limb_hits = np.random.randint(0, 5, num_sessions)  # количество попаданий в конечности
-ads_watched = np.random.choice([0, 1], num_sessions, p=[0.8, 0.2])  # просмотр рекламы (редко)
-
-skill_multiplier = np.random.randint(1, 11)  # уровень умения (1-10)
-chests_opened = np.random.randint(0, 3, num_sessions)  # количество открытых сундуков
-
-# Расчет набора монет
-coin_totals = []
+# Начальные параметры
+total_rounds = 5
+zombies_per_round = 10
 current_coins = 0
 
-for i in range(num_sessions):
-    coins_from_zombies = int(zombies_killed[i]) * skill_multiplier
-    coins_from_limbs = int(limb_hits[i]) * skill_multiplier
-    coins_from_ads = int(ads_watched[i]) * 100
-    coins_from_chests = int(chests_opened[i]) * 50
+# Обновление таблицы
+row = 1
+sh.sheet1.update_acell('A' + str(row), 'Раунд')
+sh.sheet1.update_acell('B' + str(row), 'Убито зомби')
+sh.sheet1.update_acell('C' + str(row), 'Монеты после раунда')
+sh.sheet1.update_acell('D' + str(row), 'Потраченные монеты')
 
-    # Обновление монет
-    current_coins += coins_from_zombies + coins_from_limbs + coins_from_ads + coins_from_chests
-    coin_totals.append(current_coins)
+for round_number in range(1, total_rounds + 1):
+    # Убийство зомби
+    zombies_killed = zombies_per_round
+    current_coins += zombies_killed
 
-    # Обновление Google Sheet
-    worksheet.update(f'A{i + 1}', f'Session {i + 1}')
-    worksheet.update(f'B{i + 1}', int(current_coins))  # Преобразование в обычный int
+    # Запись данных о раунде в таблицу
+    row += 1
+    sh.sheet1.update_acell('A' + str(row), str(round_number))
+    sh.sheet1.update_acell('B' + str(row), str(zombies_killed))
+    sh.sheet1.update_acell('C' + str(row), str(current_coins))
 
-    milestone_message = ""
-    if current_coins >= 5000:
-        milestone_message = "Audio 3 Milestone"
-    elif current_coins >= 3000:
-        milestone_message = "Audio 2 Milestone"
-    elif current_coins >= 1000:
-        milestone_message = "Audio 1 Milestone"
+    # Проверка, нужно ли покупать патроны
+    if round_number % 2 == 0:
+        # Предположим, игрок может потратить от 5 до 25 монет, кратные 5
+        spent_coins = min(current_coins, (current_coins // 5) * 5)  # Максимум кратное 5
+        if spent_coins > 25:
+            spent_coins = 25
+
+        current_coins -= spent_coins
+        sh.sheet1.update_acell('D' + str(row), str(spent_coins))
     else:
-        milestone_message = "Progressing"
+        sh.sheet1.update_acell('D' + str(row), '0')
 
-    worksheet.update(f'C{i + 1}', milestone_message)
+    # Увеличение количества зомби для следующего раунда
+    zombies_per_round += 10
+
+print("Данные успешно записаны в Google Таблицу.")
 
 ```
 
 #### Визуализация данных в google-таблице:
-![Снимок экрана 2024-10-08 155431](https://github.com/user-attachments/assets/ffba62a7-b18f-4b64-a008-9bd0a8a8cc1a)
+![Снимок экрана 2024-10-12 222342](https://github.com/user-attachments/assets/ee366e59-cab1-4d25-a764-68455e6a590d)
 
+Ссылка на google-таблицу: https://docs.google.com/spreadsheets/d/1etzL3dBC1fllgRFkuOMtoiuI78qffmFtAwma5M3TQ-8/edit?gid=0#gid=0
 
 
 ## Задание 3
