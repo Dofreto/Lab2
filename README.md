@@ -72,7 +72,7 @@
 -  Игрок не использует функцию просмотра рекламы и открытие сундуков.
 
 #### Скрипт на языке Python:
-Написать код на подобие кода ниже:
+
 ```py
 
 import gspread
@@ -128,87 +128,29 @@ print("Данные успешно записаны в Google Таблицу.")
 ```
 
 #### Визуализация данных в google-таблице:
-![Снимок экрана 2024-10-12 222342](https://github.com/user-attachments/assets/ee366e59-cab1-4d25-a764-68455e6a590d)
+![Снимок экрана 2024-10-13 121103](https://github.com/user-attachments/assets/6846221d-c78a-4ac8-ae8c-3382a20c4bb9)
 
-Ссылка на google-таблицу: https://docs.google.com/spreadsheets/d/1etzL3dBC1fllgRFkuOMtoiuI78qffmFtAwma5M3TQ-8/edit?gid=0#gid=0
+
+Ссылка на google-таблицу: https://docs.google.com/spreadsheets/d/1wXf5qxw3Yma4OyDXNU_PiYr79DKX94qar2WDZlksMOw/edit?gid=0#gid=0
 
 
 ## Задание 3
 ### Воспроизведение звуковых файлов на сцене Unity
 Настроить на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения выбранной переменной.
-Ход работы:
-- Настроить на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения выбранной переменной
-- Написать скрипт на языке С#
+#### Ход работы:
+##### - Настроить на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения выбранной переменной:
+      - Если количество монет после раунда меньше или равно 10, то воспроизводится звук "плохо"
+      - Если количество монет после раунда больше или равно 50, то воспроизводится звук "средне"
+      - Если количество монет после раунда больше или равно 100, то воспроизводится звук "хорошо"
+##### - Скрипт на языке С#
 
-Вот так бы всегда
-неплохо(Сидор)
-Ты бы ещё консервных банок насобирал
-
-
-Работа над игрой про зомби. Настройте на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения монет. Условия получения монет:
-- +1 монета за каждого убитого зомби. - +1 монета за попадание в конечности зомби (невсегда можно получить). - увеличение количества получаемых монет взависимоти от вкаченного навыка на повышение получения монет (увеличение от 1 до 10).
-При достижении игроком суммы 1000 монет проигрывается первый аудиофайл. При достижении игроком суммы 3000 монет проигрывается второй аудиофайл. При достижении игроком суммы 5000 монет проигрывается третий аудиофайл
-
-При написании кода и скрипат нужно отталкиваться от данных примеров: 
-На Python (Python взаимодейтсвует с google-таблицей. В google-таблице отображаются данные с Python):
-```py
-import gspread
-import numpy as np
-gc = gspread.service_account(filename='unitydatascience2-437613-ae095d93eed1.json')
-sh = gc.open('UnityServiceDataScince2')
-price = np.random.randint(2000,10000,11)
-mon = list(range(1,11))
-i=0
-while i <= len(mon):
-    i+=1
-    if i==0:
-        continue
-    else:
-        tempInf=((price[i-1]-price[i-2])/price[i-2])*100
-        tempInf=str(tempInf)
-        tempInf=tempInf.replace('.',',')
-        sh.sheet1.update(('A'+str(i)),str(i))
-        sh.sheet1.update(('B' + str(i)), str(price[i-1]))
-        sh.sheet1.update(('C' + str(i)), str(tempInf))
-        print(tempInf)
-```
-
-Работа над игрой про зомби. Настройте на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения монет. Условия получения монет:
-+1 монета за каждого убитого зомби. - +1 монета за попадание в конечности зомби (не всегда можно получить). - увеличение количества получаемых монет в зависимости от вкаченного навыка на повышение получения монет (увеличение от 1 до 10). - +100 монет за просмотр рекламы (можно смотреть не ограниченно число раз, но игроку не хочется тратить время на рекламу, поэтому он смотрит её не часто). - + 50 монет за открытие сундуков.
-При достижении игроком суммы 1000 монет проигрывается первый аудиофайл. При достижении игроком суммы 3000 монет проигрывается второй аудиофайл. При достижении игроком суммы 5000 монет проигрывается третий аудиофайл
-При написании кода и скрипта нужно отталкиваться от данных примеров:
-На Python (Python взаимодействует с google-таблицей. В google-таблице отображаются данные с Python):
-
-```py
-
-import gspread
-import numpy as np
-gc = gspread.service_account(filename='unitydatascience2-437613-ae095d93eed1.json')
-sh = gc.open('UnityServiceDataScince2')
-price = np.random.randint(2000,10000,11)
-mon = list(range(1,11))
-i=0
-while i <= len(mon):
-    i+=1
-    if i==0:
-        continue
-    else:
-        tempInf=((price[i-1]-price[i-2])/price[i-2])*100
-        tempInf=str(tempInf)
-        tempInf=tempInf.replace('.',',')
-        sh.sheet1.update(('A'+str(i)),str(i))
-        sh.sheet1.update(('B' + str(i)), str(price[i-1]))
-        sh.sheet1.update(('C' + str(i)), str(tempInf))
-        print(tempInf)
-
-```
-
-На C# (так же взаимодействеут с google-таблицей):
+```C#
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using SimpleJSON;
+
 public class NewBehaviourScript : MonoBehaviour
 {
     public AudioClip goodSpeak;
@@ -218,11 +160,13 @@ public class NewBehaviourScript : MonoBehaviour
     private Dictionary<string, float> dataSet = new Dictionary<string, float>();
     private bool statusStart = false;
     private int i = 1;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(GoogleSheets());
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -231,11 +175,13 @@ public class NewBehaviourScript : MonoBehaviour
             StartCoroutine(PlaySelectAudioGood());
             Debug.Log(dataSet["Mon_" + i.ToString()]);
         }
-        if (dataSet["Mon_" + i.ToString()] > 10 & dataSet["Mon_" + i.ToString()] < 100 & statusStart == false & i != dataSet.Count)
+
+        if (dataSet["Mon_" + i.ToString()] >= 50 & statusStart == false & i != dataSet.Count)
         {
             StartCoroutine(PlaySelectAudioNormal());
             Debug.Log(dataSet["Mon_" + i.ToString()]);
         }
+
         if (dataSet["Mon_" + i.ToString()] >= 100 & statusStart == false & i != dataSet.Count)
         {
             StartCoroutine(PlaySelectAudioBad());
@@ -244,7 +190,7 @@ public class NewBehaviourScript : MonoBehaviour
     }
     IEnumerator GoogleSheets()
     {
-        UnityWebRequest curentResp = UnityWebRequest.Get("https://sheets.googleapis.com/v4/spreadsheets/1etzL3dBC1fllgRFkuOMtoiuI78qffmFtAwma5M3TQ-8/values/Лист1?key=AIzaSyD9xlsZ-yk-X-kdJ489GSt_0SQWjl_gcvc");
+        UnityWebRequest curentResp = UnityWebRequest.Get("https://sheets.googleapis.com/v4/spreadsheets/1wXf5qxw3Yma4OyDXNU_PiYr79DKX94qar2WDZlksMOw/values/Лист1?key=AIzaSyDLsXLTNUTnJPbkxE8ZL8xiwi2dYfx3SLM");
         yield return curentResp.SendWebRequest();
         string rawResp = curentResp.downloadHandler.text;
         var rawJson = JSON.Parse(rawResp);
@@ -255,6 +201,7 @@ public class NewBehaviourScript : MonoBehaviour
             dataSet.Add(("Mon_" + selectRow[0]), float.Parse(selectRow[2]));
         }
     }
+
     IEnumerator PlaySelectAudioGood()
     {
         statusStart = true;
@@ -286,9 +233,14 @@ public class NewBehaviourScript : MonoBehaviour
         i++;
     }
 }
+```
+
+##### Работа на Unity
+![photo_2024-10-13_14-14-09](https://github.com/user-attachments/assets/dba35780-cbc3-4998-b8aa-f8a27c0cc819)
 
 
 ## Выводы
+В ходе работы я научился ананлизировать ресурсы определенной игры, визуализировать изменения и поведения этого ресурса, с помощью соотвествующих схем и ПО.
 
 Абзац умных слов о том, что было сделано и что было узнано.
 
@@ -302,66 +254,3 @@ public class NewBehaviourScript : MonoBehaviour
 | Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
 
 ## Powered by
-
-
-
-
-
-Работа над игрой про зомби. Настройте на сцене Unity воспроизведение звуковых файлов, описывающих динамику изменения монет. Условия получения монет:
-+1 монета за каждого убитого зомби. - +1 монета за попадание в конечности зомби (не всегда можно получить). - увеличение количества получаемых монет в зависимости от вкаченного навыка на повышение получения монет (увеличение от 1 до 10). - +100 монет за просмотр рекламы (можно смотреть не ограниченно число раз, но игроку не хочется тратить время на рекламу, поэтому он смотрит её не часто). - + 50 монет за открытие сундуков.
-При достижении игроком суммы 1000 монет проигрывается первый аудиофайл. При достижении игроком суммы 3000 монет проигрывается второй аудиофайл. При достижении игроком суммы 5000 монет проигрывается третий аудиофайл.
-Уже написан код на Python, нужно написать скрипт для аудио файлов на C#, который будет взаимодействовать с таблицей. Код на Python:
-```py
-
-import gspread
-import numpy as np
-
-# Подключение к Google Sheets
-gc = gspread.service_account(filename='unitydatascience2-437613-ae095d93eed1.json')
-sh = gc.open('UnityServiceDataScince2')
-worksheet = sh.sheet1
-
-sh.sheet1.clear() # Очистка таблицы от старых данных
-
-# Настройка симуляции игры
-num_sessions = 10  # количество игровых сессий
-zombies_killed = np.random.randint(1, 10, num_sessions)  # количество убитых зомби
-limb_hits = np.random.randint(0, 5, num_sessions)  # количество попаданий в конечности
-ads_watched = np.random.choice([0, 1], num_sessions, p=[0.8, 0.2])  # просмотр рекламы (редко)
-
-skill_multiplier = np.random.randint(1, 11)  # уровень умения (1-10)
-chests_opened = np.random.randint(0, 3, num_sessions)  # количество открытых сундуков
-
-# Расчет набора монет
-coin_totals = []
-current_coins = 0
-
-for i in range(num_sessions):
-    coins_from_zombies = int(zombies_killed[i]) * skill_multiplier
-    coins_from_limbs = int(limb_hits[i]) * skill_multiplier
-    coins_from_ads = int(ads_watched[i]) * 100
-    coins_from_chests = int(chests_opened[i]) * 50
-
-    # Обновление монет
-    current_coins += coins_from_zombies + coins_from_limbs + coins_from_ads + coins_from_chests
-    coin_totals.append(current_coins)
-
-    # Обновление Google Sheet
-    worksheet.update(f'A{i + 1}', f'Session {i + 1}')
-    worksheet.update(f'B{i + 1}', int(current_coins))  # Преобразование в обычный int
-
-    milestone_message = ""
-    if current_coins >= 5000:
-        milestone_message = "Audio 3 Milestone"
-    elif current_coins >= 3000:
-        milestone_message = "Audio 2 Milestone"
-    elif current_coins >= 1000:
-        milestone_message = "Audio 1 Milestone"
-    else:
-        milestone_message = "Progressing"
-
-    worksheet.update(f'C{i + 1}', milestone_message)
-
-```
-Есть файл (Google-таблица): https://sheets.googleapis.com/v4/spreadsheets/1etzL3dBC1fllgRFkuOMtoiuI78qffmFtAwma5M3TQ-8/values/Лист1?key=AIzaSyD9xlsZ-yk-X-kdJ489GSt_0SQWjl_gcvc.
-Нужно написать скрипт, который будет воспроизводить первый аудиофайл при значении второй строки равном 1000; второй аудиофайл при значении второй строки равном 3000; третий аудиофайл при значении второй строки равном 5000
